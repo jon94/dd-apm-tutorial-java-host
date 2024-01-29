@@ -21,6 +21,7 @@ jobs:
     - name: Setup Java JDK
       uses: actions/setup-java@v4.0.0
       with:
+        java-version: 11
         distribution: jdk          
          
     - name: Build Docker Image
