@@ -1,0 +1,30 @@
+# Use Ubuntu as the base image
+FROM ubuntu:latest
+
+# Install OpenJDK 11
+RUN apt-get update -y && \
+    apt-get install -y openjdk-11-jdk
+
+# Install curl
+RUN apt-get install -y curl
+
+# Set the working directory
+WORKDIR /home/apm-tutorial-java
+
+# Uncomment to add the Datadog tracing library
+# RUN curl -Lo dd-java-agent.jar https://dtdg.co/latest-java-tracer
+
+# Copy the notes directory to the working directory
+COPY notes notes/
+
+# Change the working directory to /home/apm-tutorial-java/notes
+WORKDIR /home/apm-tutorial-java/notes
+
+# Compile with Maven
+RUN ./mvnw clean package
+
+# Uncomment to run without tracing
+# ENTRYPOINT ["java", "-jar", "target/notes-0.0.1-SNAPSHOT.jar"]
+
+# Uncomment to run with tracing
+# ENTRYPOINT ["java", "-javaagent:../dd-java-agent.jar", "-Ddd.trace.sample.rate=1", "-jar", "target/notes-0.0.1-SNAPSHOT.jar"]

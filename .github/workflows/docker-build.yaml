@@ -30,6 +30,6 @@ jobs:
         image: ${{ env.DOCKER_REPOSITORY }}/${{ env.IMAGE_NAME }}
         registry: docker.io
         tag: ubuntu
-        dockerfile: notes/dockerfile.notes.maven
+        dockerfile: notes/dockerfile.notes.ubuntu.maven
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
