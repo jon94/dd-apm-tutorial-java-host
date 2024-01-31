@@ -1,5 +1,5 @@
 # Use Ubuntu as the base image
-FROM ubuntu:latest
+FROM openjdk:11
 
 # Install OpenJDK 11
 RUN apt-get update -y && \

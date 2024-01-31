@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    tags.datadoghq.com/env: singlestepinstrumentation
+    tags.datadoghq.com/service: adserviceubuntu
+    tags.datadoghq.com/version: 1.0.0
+  name: adserviceubuntu
+  namespace: singlestepinstrumentation
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: adserviceubuntu
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: adserviceubuntu
+        tags.datadoghq.com/env: singlestepinstrumentation
+        tags.datadoghq.com/service: adserviceubuntu
+        tags.datadoghq.com/version: 1.0.0
+    spec:
+      containers:
+        - env:
+            - name: PORT
+              value: "9555"
+            - name: DD_LOGS_INJECTION
+              value: "true"
+          image: jonlimpw/notes-java-app:ubuntu
+          imagePullPolicy: IfNotPresent
+          name: server
+          ports:
+            - containerPort: 9555
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 300m
+              memory: 300Mi
+            requests:
+              cpu: 200m
+              memory: 180Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            privileged: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+
