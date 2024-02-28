@@ -3,9 +3,9 @@ kind: Deployment
 metadata:
   labels:
     tags.datadoghq.com/env: singlestepinstrumentation
-    tags.datadoghq.com/service: adserviceubuntu
+    tags.datadoghq.com/service: adservice
     tags.datadoghq.com/version: 1.0.0
-  name: adserviceubuntu
+  name: adservice
   namespace: singlestepinstrumentation
 spec:
   progressDeadlineSeconds: 600
@@ -13,7 +13,7 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      app: adserviceubuntu
+      app: adservice
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -23,9 +23,9 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        app: adserviceubuntu
+        app: adservice
         tags.datadoghq.com/env: singlestepinstrumentation
-        tags.datadoghq.com/service: adserviceubuntu
+        tags.datadoghq.com/service: adservice
         tags.datadoghq.com/version: 1.0.0
     spec:
       containers:
@@ -34,8 +34,8 @@ spec:
               value: "9555"
             - name: DD_LOGS_INJECTION
               value: "true"
-          image: jonlimpw/notes-java-app:ubuntu
-          imagePullPolicy: IfNotPresent
+          image: jonlimpw/notes-java-app:latest
+          imagePullPolicy: Always
           name: server
           ports:
             - containerPort: 9555
