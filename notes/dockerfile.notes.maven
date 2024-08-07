@@ -11,6 +11,7 @@ WORKDIR /home/apm-tutorial-java
 
 #Uncomment to add the datadog tracing library
 #RUN curl -Lo dd-java-agent.jar https://dtdg.co/latest-java-tracer 
+RUN curl -L "https://get.rookout.com/rook.jar" -o rook.jar
 
 COPY notes notes/  
 WORKDIR /home/apm-tutorial-java/notes
